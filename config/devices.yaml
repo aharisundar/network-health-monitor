@@ -1,0 +1,65 @@
+# Multi-Vendor Network Devices Configuration
+# This file defines all devices to be monitored
+
+devices:
+  # CISCO DEVICES
+  - name: "catalyst-01"
+    host: "192.168.1.10"
+    vendor: "cisco"
+    device_type: "cisco_iosxe"
+    description: "Catalyst 9300 Core Switch"
+  
+  - name: "asr-01"
+    host: "192.168.1.20"
+    vendor: "cisco"
+    device_type: "cisco_iosxr"
+    description: "ASR1000 Edge Router"
+  
+  - name: "nexus-01"
+    host: "192.168.1.30"
+    vendor: "cisco"
+    device_type: "cisco_nxos"
+    description: "Nexus 9200 Data Center Switch"
+  
+  # JUNIPER DEVICES
+  - name: "ex-switch-01"
+    host: "192.168.2.10"
+    vendor: "juniper"
+    device_type: "juniper_junos"
+    description: "Juniper EX9200 Core Switch"
+  
+  - name: "srx-firewall"
+    host: "192.168.2.20"
+    vendor: "juniper"
+    device_type: "juniper_junos"
+    description: "Juniper SRX5400 Firewall"
+  
+  # ARUBA DEVICES
+  - name: "aruba-6300"
+    host: "192.168.3.10"
+    vendor: "aruba"
+    device_type: "aruba_os"
+    description: "Aruba 6300 Access Switch"
+  
+  # ARISTA DEVICES
+  - name: "arista-7050"
+    host: "192.168.4.10"
+    vendor: "arista"
+    device_type: "arista_eos"
+    description: "Arista 7050 Leaf Switch"
+
+thresholds:
+  cpu:
+    warning: 75
+    critical: 90
+  memory:
+    warning: 75
+    critical: 85
+  interface_utilization:
+    warning: 70
+    critical: 85
+
+polling:
+  interval_seconds: 300
+  timeout_seconds: 30
+  retry_count: 3
