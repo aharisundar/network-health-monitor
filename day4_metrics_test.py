@@ -5,7 +5,7 @@ Tests metric extraction from mock device outputs
 
 import logging
 from mock_devices import MockCiscoDevice, MockJuniperDevice, MockArubaDevice, MockAristaDevice
-from metrics_parser import MetricsParser, print_metrics
+from metrics_parser_simple import MetricsParser, print_metrics
 
 # Configure logging
 logging.basicConfig(
