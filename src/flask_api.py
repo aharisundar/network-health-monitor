@@ -2,46 +2,28 @@
 Flask API Module
 REST API endpoints for metrics queries
 """
-from prometheus_client import Counter, Gauge, generate_latest
-
-# Create metrics
-request_count = Counter('flask_requests_total', 'Total requests', ['method', 'endpoint'])
-request_duration = Gauge('flask_request_duration_seconds', 'Request duration')
-
 from flask import Flask, jsonify
+from prometheus_client import Counter, Gauge, generate_latest
 import logging
 
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
-@app.route('/metrics')
-def metrics():
-    return generate_latest()
-
-@app.route('/health')
-def health():
-    return {'status': 'healthy'}, 200
-    
-@app.route('/health', methods=['GET'])
-def health():
-    """Health check endpoint"""
-    return jsonify({"status": "ok", "service": "network-health-monitor"})
-
+request_count = Counter('flask_requests_total', 'Total requests', ['method', 'endpoint'])
+request_duration = Gauge('flask_request_duration_seconds', 'Request duration')
 
 @app.route('/metrics', methods=['GET'])
 def metrics():
-    """Prometheus metrics endpoint"""
-    # TODO: Week 3 - Implement metrics export
-    return jsonify({"message": "Metrics endpoint - Coming in Week 3"})
+    return generate_latest()
 
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({"status": "ok", "service": "network-health-monitor"})
 
 @app.route('/devices', methods=['GET'])
 def devices():
-    """Get list of monitored devices"""
-    # TODO: Week 3 - Implement device listing
     return jsonify({"devices": []})
 
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, debug=False)
+    app.run(host='0.0.0.0', port=5000, debug=False)
