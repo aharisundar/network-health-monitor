@@ -2,6 +2,11 @@
 Flask API Module
 REST API endpoints for metrics queries
 """
+from prometheus_client import Counter, Gauge, generate_latest
+
+# Create metrics
+request_count = Counter('flask_requests_total', 'Total requests', ['method', 'endpoint'])
+request_duration = Gauge('flask_request_duration_seconds', 'Request duration')
 
 from flask import Flask, jsonify
 import logging
@@ -10,7 +15,14 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
+@app.route('/metrics')
+def metrics():
+    return generate_latest()
 
+@app.route('/health')
+def health():
+    return {'status': 'healthy'}, 200
+    
 @app.route('/health', methods=['GET'])
 def health():
     """Health check endpoint"""
